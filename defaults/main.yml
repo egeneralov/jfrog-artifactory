@@ -29,6 +29,22 @@ ja_database_vars:
   pgdg_postgresql_conf:
     - { "k": "listen_addresses", "v": "'127.0.0.1'" }
     - { "k": "port", "v": "{{ ja_db.port }}" }
+    - { "k": "shared_buffers", "v": "2GB" }
+    - { "k": "work_mem", "v": "31MB" }
+    - { "k": "maintenance_work_mem", "v": "256MB" }
+    - { "k": "effective_io_concurrency", "v": "200" }
+    - { "k": "max_worker_processes", "v": "15" }
+    - { "k": "max_parallel_workers_per_gather", "v": "2" }
+    - { "k": "wal_buffers", "v": "16MB" }
+    - { "k": "max_wal_size", "v": "2GB" }
+    - { "k": "min_wal_size", "v": "512MB" }
+    - { "k": "random_page_cost", "v": "1.1" }
+    - { "k": "effective_cache_size", "v": "1536MB" }
+    - { "k": "default_statistics_target", "v": "500" }
+    - { "k": "max_locks_per_transaction", "v": "64" }
+    - { "k": "max_connections", "v": "100" }
+    - { "k": "checkpoint_completion_target", "v": "0.7" }
+#     - { "k": "", "v": "" }
   pgdg_pg_hba_conf:
     - {
         "connection_type": "local",
