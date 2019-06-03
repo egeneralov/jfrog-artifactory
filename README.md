@@ -1,38 +1,51 @@
-Role Name
-=========
+egeneralov.jfrog-artifactory
+============================
 
-A brief description of the role goes here.
-
-Requirements
-------------
-
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Provision artifactory installation. **WARNING**: not ready for production use.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+- **ja_repo**: `deb https://jfrog.bintray.com/artifactory-pro-debs {{ ansible_distribution_release }} main`
+- **ja_key**:
+  - **server**: `keyserver.ubuntu.com`
+  - **id**: `6B219DCCD7639232`
+- **ja_manage_db**: `true`
+- **ja_version**: `6.9.0`
+- **ja_db**:
+  - **type**: `postgresql`
+  - **driver_version**: `42.2.5`
+  - **host**: `127.0.0.1`
+  - **port**: `5432`
+  - **name**: `artifactory`
+  - **user**: `artifactory`
+  - **password**: `artifactory`
+- **ja_database_vars**:
+  - **pgdg_users**: `[]`
+    - **user**: `{{ ja_db.user }}`
+    - **password**: `{{ ja_db.password }}`
+    - **database**: `{{ ja_db.name }}`
+
+- **ja_initial_wizard**:
+  - **version**: 1
+  - **GeneralConfiguration**:
+    **licenseKey**: `<base64>`
+    **licenseKeys**: `[]`
+    **baseUrl**: `https://mycomp.arti.co`
+  - **OnboardingConfiguration**:
+    - **repoTypes**: []
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
-
-Example Playbook
-----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+- [egeneralov.nginx](https://github.com/egeneralov/ansible-nginx)
 
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Eduard Generalov <eduard@generalov.net>

@@ -1,2 +1,118 @@
 ---
 # defaults file for egeneralov.jfrog-artifactory
+
+ja_repo: "deb https://jfrog.bintray.com/artifactory-pro-debs {{ ansible_distribution_release }} main"
+
+ja_key:
+  server: keyserver.ubuntu.com
+  id: 6B219DCCD7639232
+
+ja_manage_db: true
+
+ja_version: 6.9.0
+
+ja_db:
+  type: postgresql
+  driver_version: 42.2.5
+  host: 127.0.0.1
+  port: 5432
+  name: artifactory
+  user: artifactory
+  password: artifactory
+
+
+ja_database_vars:
+  pgdg_users:
+    - user: "{{ ja_db.user }}"
+      password: "{{ ja_db.password }}"
+      database: "{{ ja_db.name }}"
+  pgdg_postgresql_conf:
+    - { "k": "listen_addresses", "v": "'127.0.0.1'" }
+    - { "k": "port", "v": "{{ ja_db.port }}" }
+  pgdg_pg_hba_conf:
+    - {
+        "connection_type": "local",
+        "database": "all",
+        "user": "all",
+        "address": "",
+        "method": "peer"
+      }
+    - {
+        "connection_type": "host",
+        "database": "all",
+        "user": "all",
+        "address": "127.0.0.1/32",
+        "method": "md5"
+      }
+  pgdg_supported_versions:
+    - 9.4
+    - 9.5
+    - 9.6
+
+
+ja_supported_os:
+  - Debian
+
+ja_supported_os_releases:
+  - stretch
+
+ja_supported_db:
+  - postgresql
+
+ja_initial_wizard:
+  version: 1
+  GeneralConfiguration:
+    ## License key to import in onboarding
+    licenseKey : "Enter your license key"
+    ## If you are using this file to configure an HA cluster, please use the "licenseKeys" tag instead
+    #licenseKeys :
+    #- lic1
+    #- lic2
+    #- ...
+  
+    ## Setup the Artifactory base URL
+    ## For more information about the Artifactory base URL, please refer to
+    ## https://www.jfrog.com/confluence/display/RTF/Configuring+Artifactory#ConfiguringArtifactory-GeneralSettings
+    ## Uncomment the line below to set the Artifactory base URL
+    #baseUrl : "https://mycomp.arti.co"
+  
+    ## Configure proxies for artifactory
+    ## For more information on configuring a proxy in Artifactory, please refer to
+    ## https://www.jfrog.com/confluence/display/RTF/Managing+Proxies
+    ## Uncomment the lines below to setup a proxy
+    #proxies :
+    # -  key : "proxy1"
+    #    host : "https://proxy.mycomp.io"
+    #    port : 443
+    #    userName : "admin"
+    #    password : "password"
+    #    defaultProxy : true
+  
+  
+  OnboardingConfiguration:
+    ## Uncomment the package types for which you want to create default repositories
+    repoTypes: []
+    # - bower
+    # - cocoapods
+    # - conan
+    # - composer
+    # - cran
+    # - debian
+    # - docker
+    # - gems
+    # - generic
+    # - gitlfs
+    # - gradle
+    # - go
+    # - helm
+    # - ivy
+    # - maven
+    # - npm
+    # - nuget
+    # - opkg
+    # - puppet
+    # - pypi
+    # - sbt
+    # - vagrant
+    # - yum
+  

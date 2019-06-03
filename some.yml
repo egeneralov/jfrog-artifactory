@@ -1,0 +1,13 @@
+
+- hosts: localhost
+  gather_facts: no
+  vars:
+    ja_lc_start: '{"artifactory": {"id": '
+    ja_lc_end: ',"owner": "r4p3","validFrom": 1556513942689,"expires": 1988147142688,"type": "ENTERPRISE_PLUS","trial": False,"properties": {}}}'
+  tasks:
+    - debug:
+        msg: '{% for i in range(10) %}{"artifactory": {"id": {{ i }},"owner": "r4p3","validFrom": 1556513942689,"expires": 1988147142688,"type": "ENTERPRISE_PLUS","trial": False,"properties": {}}}\n{% endfor %}'
+#       with_items:
+#         - "{{ ja_lc_start }}{{ 9999999999999999999999 | random | to_uuid }}{{ ja_lc_end }}"
+
+

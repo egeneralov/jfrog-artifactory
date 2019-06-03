@@ -1,0 +1,33 @@
+---
+
+- name: "Check if os supported"
+  assert:
+    that:
+      - "ansible_distribution in ja_supported_os"
+      - "ansible_distribution_release in ja_supported_os_releases"
+    fail_msg: "Unsupported: {{ ansible_distribution }} {{ ansible_distribution_release }}"
+    success_msg: "Provisioning Jfrog Artefactory with {{ ja_db.type }} database"
+
+
+- name: "Check if {{ ja_db.type }} is supported by role"
+  assert:
+    that:
+      - "ja_db.type in ja_supported_db"
+    fail_msg: "{{ ja_db.type }} is not supported db"
+    success_msg: "Provisioning Jfrog Artefactory with {{ ja_db.type }} database"
+
+
+- name: "Check if memory > 2G"
+  assert:
+    that:
+      - "{{ ansible_memtotal_mb }} > 2000"
+    fail_msg: "Minimal requirement 2000 mb, detected {{ ansible_memtotal_mb }}"
+    success_msg: "Detected {{ ansible_memtotal_mb }}mb"
+
+
+- name: "Check if cpu cores > 2"
+  assert:
+    that:
+      - "ansible_processor_vcpus > 1"
+    fail_msg: "Minimal requirement 2 cpu cores"
+    success_msg: "Detected {{ ansible_processor_vcpus }} cpu"

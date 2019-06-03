@@ -1,0 +1,6 @@
+---
+
+- name: "configure : initial wizard configuration file"
+  template:
+    src: artifactory.config.import.yml.j2
+    dest: /var/opt/jfrog/artifactory/etc/artifactory.config.import.yml

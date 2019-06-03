@@ -1,5 +1,6 @@
 ---
-- hosts: localhost
+
+- hosts: artifactory
   remote_user: root
   roles:
     - egeneralov.jfrog-artifactory

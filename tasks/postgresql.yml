@@ -1,0 +1,24 @@
+---
+
+- name: "database: install postgresql"
+  include_role:
+    name: egeneralov.postgresql
+  vars:
+    pgdg_users: "{{ ja_database_vars.pgdg_users }}"
+    pgdg_postgresql_conf: "{{ ja_database_vars.pgdg_postgresql_conf }}"
+    pgdg_pg_hba_conf: "{{ ja_database_vars.pgdg_pg_hba_conf }}"
+    pgdg_supported_versions: "{{ ja_database_vars.pgdg_supported_versions }}"
+  when: ja_manage_db == true
+
+
+- name: "database : driver"
+  get_url:
+    remote_src: yes
+    url: "http://central.maven.org/maven2/org/postgresql/postgresql/{{ ja_db.driver_version }}/postgresql-{{ ja_db.driver_version }}.jar"
+    dest: "/opt/jfrog/artifactory/tomcat/lib/postgresql-{{ ja_db.driver_version }}.jar"
+
+
+- name: "database : config"
+  template:
+    src: db.properties.j2
+    dest: /etc/opt/jfrog/artifactory/db.properties

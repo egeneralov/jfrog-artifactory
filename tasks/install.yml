@@ -1,0 +1,31 @@
+---
+
+- name: "install : java"
+  apt:
+    name:
+      - default-jre
+      - apt-transport-https
+      - gnupg2
+    update_cache: yes
+    cache_valid_time: 3600
+
+
+- name: "install : add apt key"
+  apt_key:
+    keyserver: "{{ ja_key.server }}"
+    id: "{{ ja_key.id }}"
+  register: jfrogartifactory_repo_key
+
+
+- name: "install : add repository"
+  apt_repository:
+    repo: "{{ ja_repo }}"
+    filename: jfrog-artifactory
+  register: jfrogartifactory_repo
+
+
+- name: "install : jfrog artifactory"
+  apt:
+    name: "jfrog-artifactory-pro={{ ja_version }}"
+    update_cache: "{% if jfrogartifactory_repo is changed or jfrogartifactory_repo_key is changed %}yes{% else %}no{% endif %}"
+

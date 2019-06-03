@@ -1,2 +1,17 @@
 ---
 # tasks file for egeneralov.jfrog-artifactory
+
+- include_tasks: check.yml
+
+- include_tasks: install.yml
+
+- name: "setup {{ ja_db.type }} database"
+  include_tasks: "{{ ja_db.type }}.yml"
+
+- include_tasks: configure.yml
+
+- name: (re)start artifactory.service
+  systemd:
+    name: artifactory.service
+    enabled: yes
+    state: started
