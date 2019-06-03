@@ -8,7 +8,7 @@
     pgdg_postgresql_conf: "{{ ja_database_vars.pgdg_postgresql_conf }}"
     pgdg_pg_hba_conf: "{{ ja_database_vars.pgdg_pg_hba_conf }}"
     pgdg_supported_versions: "{{ ja_database_vars.pgdg_supported_versions }}"
-  when: ja_manage_db == true
+  when: "ja_manage_db == true"
 
 
 - name: "database : driver"
